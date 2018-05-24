@@ -1,7 +1,6 @@
 //# aula12_PrimeiraTela
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +23,8 @@ public class AulaJavaSwing extends JFrame implements ActionListener{
     private JTextField campoEnderecoAluno;
     private JTextField campoTelefoneAluno;
     private JTextField campoCpfAluno;
-    private JRadioButtonMenuItem campoOpcaoAluno;
-    private JRadioButtonMenuItem campoOpcaoExAluno;
+    private JRadioButton botaoOpcaoAluno;
+    private JRadioButton botaoOpcaoExAluno;
 
     private JSeparator separarCampos1;
     private JSeparator separarCampos2;
@@ -58,11 +57,11 @@ public class AulaJavaSwing extends JFrame implements ActionListener{
 
         botaoAtualizar = new JButton ("Atualizar");
         botaoAtualizar.setBounds(142,190,100,23);
-        botaoAtualizar.addActionListener(this);
+        //botaoAtualizar.addActionListener(this);
 
         botaoFechar = new JButton ("Fechar");
         botaoFechar.setBounds(250,190,100,23);
-        botaoFechar.addActionListener(this);
+        //botaoFechar.addActionListener(this);
     }
 
     private void centralizar(){
@@ -126,8 +125,8 @@ public class AulaJavaSwing extends JFrame implements ActionListener{
         add(campoEnderecoAluno);
         add(campoTelefoneAluno);
         add(campoCpfAluno);
-        add(campoOpcaoAluno);
-        add(campoOpcaoExAluno);
+        add(botaoOpcaoAluno);
+        add(botaoOpcaoExAluno);
 
         add(separarCampos1);
         add(separarCampos2);
@@ -167,12 +166,14 @@ public class AulaJavaSwing extends JFrame implements ActionListener{
         campoCpfAluno.setBounds(70,125,300,20);
 
         //terceira parte do campo tabela.
-        campoOpcaoAluno = new JRadioButtonMenuItem("Aluno");
-        campoOpcaoAluno.setBounds(122,145,100,23);
+        botaoOpcaoAluno = new JRadioButton("Aluno");
+        botaoOpcaoAluno.setBounds(122,145,100,23);
+        botaoOpcaoAluno.addActionListener(this::acaoRadioAluno);
 
 
-        campoOpcaoExAluno = new JRadioButtonMenuItem("Ex Aluno");
-        campoOpcaoExAluno.setBounds(240,145,100,23);
+        botaoOpcaoExAluno = new JRadioButton("Ex Aluno");
+        botaoOpcaoExAluno.setBounds(240,145,100,23);
+        botaoOpcaoExAluno.addActionListener(this::acaoRadioExAluno);
     }
 
     private void criarLabels() {
@@ -201,11 +202,24 @@ public class AulaJavaSwing extends JFrame implements ActionListener{
 
         rotuloCpfAluno = new JLabel ("CPF:");
         rotuloCpfAluno.setBounds(40,125,110,18);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent eventoTela){
         JOptionPane.showMessageDialog(this,"Matrícula: "+campoMatriculaAluno.getText()+"\nTurma: "+campoTurmaAluno.getText()+"\nNome: "+campoNomeAluno.getText()+"\nEndereço: "+campoEnderecoAluno.getText()+"\nTelefone: "+campoTelefoneAluno.getText()+"\nCPF: "+campoCpfAluno.getText());
+    }
+
+    public void acaoRadioAluno (ActionEvent eventoTela){
+        if (botaoOpcaoAluno.isSelected())
+            botaoOpcaoExAluno.setSelected(false);
+            botaoAtualizar.setEnabled(true);
+            botaoFechar.setVisible(false);
+    }
+
+    public void acaoRadioExAluno (ActionEvent eventoTela){
+        if (botaoOpcaoExAluno.isSelected())
+            botaoOpcaoAluno.setSelected(false);
+            botaoAtualizar.setEnabled(false);
+            botaoFechar.setVisible(true);
     }
 }
